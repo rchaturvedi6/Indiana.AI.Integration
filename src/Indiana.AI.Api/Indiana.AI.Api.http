@@ -1,0 +1,66 @@
+@host = http://localhost:5192
+
+### Status heartbeat
+GET {{host}}/api/status
+Accept: application/json
+
+### Health check
+GET {{host}}/health
+
+### API 1 — Document upload (returns ack 1002 / PASS, echoes route)
+POST {{host}}/api/document-upload
+Content-Type: application/json
+
+{
+  "route": { "domain": "prov-enroll", "apiVer": 1.5, "tenantID": "b37b1cec-6603-2d4f-ac37-74e0724774a1", "appClient": "prov_portal_ftest", "clientID": "", "requestGUID": "2965796994", "requestType": "document_upload", "timeStampId": "260909082144923" },
+  "enrollment": {
+    "trackingID": "7807176902",
+    "applicationType": "NewEnrollment",
+    "enrollmentType": "Facility",
+    "providerType": "Hospital",
+    "providerInformation": {
+      "npi": "1269201798",
+      "ssn": "733172867",
+      "businessInformation": { "legalName": "Inuvik Regional Hospital Research" },
+      "cliaDetails": [ { "cliaNumber": "15B3453646", "effectiveDate": "2026-07-17T00:00:00", "endDate": "9999-12-31T00:00:00" } ],
+      "licenseDetails": [ { "licenseNumber": "23D6533475", "effectiveDate": "2023-01-01T00:00:00", "expirationDate": "2029-12-31T00:00:00" } ],
+      "addresses": [ { "addressType": "S", "isPrimaryLocation": true, "address": { "line1": "4548 GOOD ADAMS LN", "city": "VIRGINIA BEACH", "stateId": "VA", "postalCode": "234554940" } } ],
+      "attachments": [ { "fileId": "5fe4dcb2-0553-4f8b-b5bb-6fe5683fdf4e", "fileName": "Hospital_License.pdf", "attachmentTypeCode": "HospLic", "attachmentTypeName": "Hospital License" } ],
+      "backdateRequest": { "issueDate": "2026-09-18T00:00:00" }
+    }
+  }
+}
+
+### API 3 — Document validate (returns 2001 / FAIL with real error codes)
+POST {{host}}/api/document-validate
+Content-Type: application/json
+
+{
+  "route": { "domain": "prov-enroll", "requestGUID": "2965796994", "requestType": "document_validate" },
+  "enrollment": {
+    "trackingID": "7807176902",
+    "providerInformation": {
+      "npi": "1269201798",
+      "ssn": "733172867",
+      "businessInformation": { "legalName": "Inuvik Regional Hospital Research" },
+      "cliaDetails": [ { "cliaNumber": "15B3453646", "effectiveDate": "2026-07-17T00:00:00", "endDate": "9999-12-31T00:00:00" } ],
+      "licenseDetails": [ { "licenseNumber": "23D6533475", "effectiveDate": "2023-01-01T00:00:00", "expirationDate": "2029-12-31T00:00:00" } ],
+      "addresses": [ { "isPrimaryLocation": true, "address": { "line1": "4548 GOOD ADAMS LN", "city": "VIRGINIA BEACH", "stateId": "VA", "postalCode": "234554940" } } ],
+      "backdateRequest": { "issueDate": "2026-09-18T00:00:00" },
+      "attachments": [
+        { "fileId": "9eb84ea3-37c0-46a1-a75b-b8935c0c63bc", "fileName": "W9.pdf", "attachmentTypeCode": "Federal", "attachmentTypeName": "Federal W-9 Form" },
+        { "fileId": "5fe4dcb2-0553-4f8b-b5bb-6fe5683fdf4e", "fileName": "Hospital_License.pdf", "attachmentTypeCode": "HospLic", "attachmentTypeName": "Hospital License" }
+      ]
+    }
+  }
+}
+
+### API 2 — File Management Server retrieval (GetEDMSFileQuery, Base64 PDF)
+POST {{host}}/api/artifact-retrieval
+Content-Type: application/json
+
+{ "where": { "edmsFileId": "9eb84ea3-37c0-46a1-a75b-b8935c0c63bc", "moduleName": "Provider Enrollment" } }
+
+### Stored verification result
+GET {{host}}/api/verification-results/5fe4dcb2-0553-4f8b-b5bb-6fe5683fdf4e
+Accept: application/json

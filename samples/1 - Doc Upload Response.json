@@ -1,0 +1,18 @@
+{
+    "route": {
+        "domain": "prov-enroll",
+        "apiVer": 1.5,
+        "tenantID": "b37b1cec-6603-2d4f-ac37-74e0724774a1",
+        "appClient": "prov_portal_ftest",
+        "clientID": "",
+        "requestGUID": "2965796994",
+        "requestType": "document_upload",
+        "timeStampId": "260909082144923"
+    },
+    "ack_status": {
+        "code": "1002",
+        "status": "PASS",
+        "processingTimeMs": 30.768,
+        "timestamp": "2026-09-23T10:22:27"
+    }
+}

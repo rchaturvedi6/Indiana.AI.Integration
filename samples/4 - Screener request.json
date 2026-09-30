@@ -1,0 +1,912 @@
+{
+    "route": {
+        "domain": "prov-enrollment",
+        "apiver": 1.0,
+        "tenantID": "77b50320-5f06-5740-84f4-18d4a8cda51d",
+        "appClient": "screener_ftest",
+        "requestGUID": "f5bd3a8f-909c-4eb7-ac10-630817473f2f",
+        "requestType": "document_upload"
+    },
+    "enrollment": {
+        "enrollmentDetail": {
+            "trackingId": "6491800856",
+            "enrollmentApplicationId": "e889155c-211d-440a-a48b-0e713704c56a"
+        },
+        "enrollmentCriteria": {
+            "applicationType": "New Enrollment",
+            "applicationTypeCode": "0",
+            "enrollmentType": "Individual",
+            "enrollmentTypeCode": "I",
+            "providerType": "Physician",
+            "providerTypeCode": "31",
+            "requestedEffectiveDate": "2026-04-29Z",
+            "riskLevel": "Limited",
+            "riskLevelCode": "L"
+        },
+        "enrollmentFlags": {
+            "isBackgroundCheckNeeded": false,
+            "isCredentialingRequired": true,
+            "isFeeRequired": false,
+            "isNursingFacility": false,
+            "isRateRequired": false,
+            "isSiteVisitNeeded": false
+        },
+        "providerInformation": {
+            "isIndividual": true,
+            "isBusiness": false,
+            "isAsBusiness": false,
+            "providerIdentifiers": {
+                "npi": "1003000134",
+                "ssn": "",
+                "preferredCommunicationLanguage": "English",
+                "preferredCommunicationLanguageLocale": "en-us"
+            },
+            "otherIdentifiers": {
+                "isChowEnrollment": false,
+                "isCurrentlyEnrolled": false,
+                "isPossibleDuplicate": false,
+                "isPreviouslyEnrolled": false,
+                "isRegistered": false,
+                "telehealthServicesOffered": false
+            },
+            "individualInformation": {
+                "name": {
+                    "first": "THOMAS",
+                    "middle": "LEE",
+                    "last": "CIBULL",
+                    "familyNames": [
+                        "CIBULL"
+                    ]
+                },
+                "gender": "M",
+                "dateOfBirth": "1980-05-15Z"
+            }
+        },
+        "applicantContact": {
+            "name": {
+                "first": "THOMAS",
+                "middle": "LEE",
+                "last": "CIBULL",
+                "familyNames": [
+                    "CIBULL",
+                    "LINDA"
+                ]
+            },
+            "address": {
+                "line1": "2650 RIDGE AVE",
+                "city": "EVANSTON",
+                "state": {
+                    "id": "IL",
+                    "name": "Illinois",
+                    "description": "IL - Illinois"
+                },
+                "country": {
+                    "id": "US",
+                    "name": "UNITED STATES",
+                    "description": "US - UNITED STATES"
+                },
+                "postalCode": "602011700",
+                "isValid": false,
+                "latitude": 0,
+                "longitude": 0
+            },
+            "contactPreference": {
+                "phoneNumber": {
+                    "type": {
+                        "id": "O",
+                        "name": "Other",
+                        "description": "O - Other"
+                    },
+                    "number": "2483939393"
+                },
+                "emailAddress": "LYNDA.MACINTOSH@GAINWELLTECHNOLOGIES.COM",
+                "preferredCommunicationMethod": "Email"
+            }
+        },
+        "specialties": [
+            {
+                "specialtyCode": "333",
+                "description": "Pathologist",
+                "displayName": "333 - Pathologist",
+                "isPrimary": "true",
+                "hasWaiver": "false",
+                "hasProgram": "false",
+                "taxonomy": {
+                    "taxonomyCode": "207ZP0101X",
+                    "description": "Anatomic Pathology Physician",
+                    "displayName": "207ZP0101X - Anatomic Pathology Physician"
+                }
+            }
+        ],
+        "licenseDetails": [
+            {
+                "licenseNumber": "TESTLIC012",
+                "licenseState": {
+                    "id": "IL",
+                    "name": "Illinois",
+                    "description": "IL - Illinois"
+                },
+                "assigningBoard": {
+                    "id": "OTHER",
+                    "name": "OTHER",
+                    "description": "OTHER - OTHER"
+                },
+                "effectiveDate": "2026-03-29Z",
+                "expirationDate": "2029-05-09Z"
+            }
+        ],
+        "controlledSubstanceDetails": {
+            "dispenser": {
+                "isRegistered": "false"
+            },
+            "prescriber": {
+                "isRegistered": "false"
+            }
+        },
+        "addresses": [
+            {
+                "index": 1,
+                "address": {
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "description": " - "
+                    },
+                    "country": {
+                        "description": " - "
+                    },
+                    "isValid": true,
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "R",
+                    "name": "Remit To",
+                    "description": "R - Remit To"
+                },
+                "contact": {
+                    "isIndividual": true
+                },
+                "copiedFrom": {
+                    "description": " - "
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "isDirty": false,
+                "disposition": {
+                    "action": "N/A",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z"
+                }
+            },
+            {
+                "index": 2,
+                "address": {
+                    "line1": "2650 RIDGE AVE",
+                    "city": "EVANSTON",
+                    "county": {
+                        "id": "USIL031",
+                        "name": "Cook",
+                        "description": "USIL031 - Cook"
+                    },
+                    "state": {
+                        "id": "IL",
+                        "name": "Illinois",
+                        "description": "IL - Illinois"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "602011700",
+                    "isValid": true,
+                    "latitude": 42.0653,
+                    "longitude": -87.68327
+                },
+                "addressName": "OFFICE",
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "M",
+                    "name": "Mail To",
+                    "description": "M - Mail To"
+                },
+                "contact": {
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "THOMAS",
+                        "middle": "LEE",
+                        "last": "CIBULL"
+                    }
+                },
+                "copiedFrom": {
+                    "id": "S",
+                    "name": "Service Location",
+                    "description": "S - Service Location"
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            },
+            {
+                "index": 3,
+                "address": {
+                    "line1": "2650 RIDGE AVE",
+                    "city": "EVANSTON",
+                    "county": {
+                        "id": "USIL031",
+                        "name": "Cook",
+                        "description": "USIL031 - Cook"
+                    },
+                    "state": {
+                        "id": "IL",
+                        "name": "Illinois",
+                        "description": "IL - Illinois"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "602011700",
+                    "isValid": true,
+                    "latitude": 42.0653,
+                    "longitude": -87.68327
+                },
+                "addressName": "OFFICE",
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "P",
+                    "name": "Pay To",
+                    "description": "P - Pay To"
+                },
+                "contact": {
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "THOMAS",
+                        "middle": "LEE",
+                        "last": "CIBULL"
+                    }
+                },
+                "copiedFrom": {
+                    "id": "S",
+                    "name": "Service Location",
+                    "description": "S - Service Location"
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            },
+            {
+                "index": 4,
+                "address": {
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "description": " - "
+                    },
+                    "country": {
+                        "description": " - "
+                    },
+                    "isValid": true,
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "I",
+                    "name": "Informational Mail To",
+                    "description": "I - Informational Mail To"
+                },
+                "contact": {
+                    "isIndividual": true
+                },
+                "copiedFrom": {
+                    "description": " - "
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "isDirty": false,
+                "disposition": {
+                    "action": "N/A",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z"
+                }
+            },
+            {
+                "index": 5,
+                "address": {
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "description": " - "
+                    },
+                    "country": {
+                        "description": " - "
+                    },
+                    "isValid": true,
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "D",
+                    "name": "Doing Business As",
+                    "description": "D - Doing Business As"
+                },
+                "contact": {
+                    "isIndividual": true
+                },
+                "copiedFrom": {
+                    "description": " - "
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "isDirty": false,
+                "disposition": {
+                    "action": "N/A",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z"
+                }
+            },
+            {
+                "index": 6,
+                "address": {
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "description": " - "
+                    },
+                    "country": {
+                        "description": " - "
+                    },
+                    "isValid": true,
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "MR",
+                    "name": "Medical Records Request",
+                    "description": "MR - Medical Records Request"
+                },
+                "contact": {
+                    "isIndividual": true
+                },
+                "copiedFrom": {
+                    "description": " - "
+                },
+                "isPrimaryLocation": false,
+                "locationCode": {
+                    "description": " - "
+                },
+                "isDirty": false,
+                "disposition": {
+                    "action": "N/A",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z"
+                }
+            },
+            {
+                "index": 7,
+                "address": {
+                    "line1": "2650 RIDGE AVE",
+                    "city": "EVANSTON",
+                    "county": {
+                        "id": "USIL031",
+                        "name": "Cook",
+                        "description": "USIL031 - Cook"
+                    },
+                    "state": {
+                        "id": "IL",
+                        "name": "Illinois",
+                        "description": "IL - Illinois"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "602011700",
+                    "isValid": true,
+                    "latitude": 42.0653,
+                    "longitude": -87.68327
+                },
+                "addressId": "0",
+                "addressName": "OFFICE",
+                "addressSource": "Addresses",
+                "addressType": {
+                    "id": "S",
+                    "name": "Service Location",
+                    "description": "S - Service Location"
+                },
+                "contact": {
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "THOMAS",
+                        "middle": "LEE",
+                        "last": "CIBULL"
+                    }
+                },
+                "copiedFrom": {
+                    "description": " - "
+                },
+                "isPrimaryLocation": true,
+                "locationCode": {
+                    "id": "O",
+                    "name": "Out of State",
+                    "description": "O - Out of State"
+                },
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            },
+            {
+                "index": 8,
+                "address": {
+                    "line1": "2650 RIDGE AVE",
+                    "city": "EVANSTON",
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "id": "IL",
+                        "name": "Illinois",
+                        "description": "IL - Illinois"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "602011700",
+                    "isValid": true,
+                    "latitude": 42.0653,
+                    "longitude": -87.68327
+                },
+                "addressSource": "General",
+                "addressType": {
+                    "name": "Contact",
+                    "description": " - Contact"
+                },
+                "contact": {
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "THOMAS",
+                        "middle": "LEE",
+                        "last": "CIBULL"
+                    }
+                },
+                "isPrimaryLocation": false,
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            },
+            {
+                "index": 9,
+                "address": {
+                    "county": {
+                        "description": " - "
+                    },
+                    "state": {
+                        "description": " - "
+                    },
+                    "country": {
+                        "description": " - "
+                    },
+                    "isValid": true,
+                    "latitude": 0,
+                    "longitude": 0
+                },
+                "addressSource": "General",
+                "addressType": {
+                    "name": "Home",
+                    "description": " - Home"
+                },
+                "isPrimaryLocation": false,
+                "isDirty": false,
+                "disposition": {
+                    "action": "N/A",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z"
+                }
+            },
+            {
+                "index": 10,
+                "address": {
+                    "line1": "57371 JUNCTION CT",
+                    "city": "WASHINGTON",
+                    "state": {
+                        "id": "MI",
+                        "name": "Michigan",
+                        "description": "MI - Michigan"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "480943848",
+                    "isValid": true,
+                    "latitude": 42.715276,
+                    "longitude": -83.053139
+                },
+                "addressSource": "Self-Disclosure",
+                "addressType": {
+                    "name": "Audit Contact",
+                    "description": " - Audit Contact"
+                },
+                "contact": {
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "CAROLYNN",
+                        "middle": "LOU",
+                        "last": "DONALD"
+                    }
+                },
+                "isPrimaryLocation": false,
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            },
+            {
+                "index": 11,
+                "address": {
+                    "line1": "57222 JUNCTION CT",
+                    "city": "WASHINGTON",
+                    "state": {
+                        "id": "MI",
+                        "name": "Michigan",
+                        "description": "MI - Michigan"
+                    },
+                    "country": {
+                        "id": "US",
+                        "name": "UNITED STATES",
+                        "description": "US - UNITED STATES"
+                    },
+                    "postalCode": "480943848",
+                    "isValid": true,
+                    "latitude": 42.71569,
+                    "longitude": -83.05284
+                },
+                "addressSource": "Self-Disclosure",
+                "addressType": {
+                    "name": "Records Address",
+                    "description": " - Records Address"
+                },
+                "isPrimaryLocation": false,
+                "phoneNumbers": [
+                    {
+                        "type": {
+                            "id": "O",
+                            "name": "Other",
+                            "description": "O - Other"
+                        },
+                        "number": "2483939393"
+                    }
+                ],
+                "isDirty": false,
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            }
+        ],
+        "attachments": [
+            {
+                "index": 1,
+                "fileId": "8e96271d-fa17-4c57-896b-4193101aa2ca",
+                "fileName": "5_Professional_License.pdf",
+                "fileType": {
+                    "id": "Lic",
+                    "name": "License",
+                    "description": "Lic - License"
+                },
+                "postUploaded": false,
+                "required": true,
+                "transmissionMethod": {
+                    "id": "EL",
+                    "name": "Electronically Only",
+                    "description": "EL - Electronically Only"
+                }
+            }
+        ],
+        "fundingSource": {
+            "id": "TEST1",
+            "name": "TEST",
+            "description": "TEST1 - TEST"
+        },
+        "disclosures": [
+            {
+                "index": 1,
+                "disclosureForm": "Self",
+                "disclosureFormId": 0,
+                "entityInformation": {
+                    "dateOfBirth": "1980-05-15Z",
+                    "isIndividual": true,
+                    "personName": {
+                        "first": "THOMAS",
+                        "middle": "LEE",
+                        "last": "CIBULL",
+                        "familyNames": [
+                            "CIBULL"
+                        ]
+                    },
+                    "ssn": ""
+                },
+                "disposition": {
+                    "action": "Pass",
+                    "reviewer": "System",
+                    "reviewDate": "2026-04-30Z",
+                    "comment": "Auto-Pass"
+                }
+            }
+        ]
+    },
+    "screeningResults": {
+        "screeningReviewRequired": true,
+        "screenings": [
+            {
+                "index": 1,
+                "criteria": {
+                    "checkCLIA": false,
+                    "checkDEA": false,
+                    "checkLicense": true,
+                    "checkMCSIS": true,
+                    "checkNPPES": true,
+                    "checkPECOS": true,
+                    "checkSAM": true,
+                    "checkSSNDM": true,
+                    "checkStateScreening": false,
+                    "checkTaxId": true,
+                    "dateOfBirth": "1980-05-15Z",
+                    "entityDescription": "Enrolling Provider - CIBULL, THOMAS",
+                    "entityType": "Provider",
+                    "firstName": "THOMAS",
+                    "lastName": "CIBULL",
+                    "licenseNumber": "TESTLIC012",
+                    "licenseState": "IL",
+                    "npi": "1003000134",
+                    "performTransactionAudit": true,
+                    "requestType": "I",
+                    "ssn": ""
+                },
+                "screeningReviewRequired": true,
+                "disposition": {
+                    "screeningReviewRequired": true,
+                    "results": [
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "SSA DM"
+                        },
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "OIG/LEIE"
+                        },
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "SAM"
+                        },
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "MCSIS"
+                        },
+                        {
+                            "action": "Flag",
+                            "comment": "Auto Flag",
+                            "exceptions": [
+                                "License not found"
+                            ],
+                            "passed": false,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "License"
+                        },
+                        {
+                            "action": "Flag",
+                            "comment": "Auto Flag",
+                            "exceptions": [
+                                "NPI taxonomy type mismatch"
+                            ],
+                            "passed": false,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "NPPES"
+                        },
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "PECOS"
+                        },
+                        {
+                            "action": "Pass",
+                            "comment": "Auto Pass",
+                            "passed": true,
+                            "reviewer": "System",
+                            "reviewDate": "2026-04-30Z",
+                            "screeningCheck": "Tax ID"
+                        }
+                    ]
+                },
+                "result": {
+                    "nppesResult": [
+                        {
+                            "credential": "M.D.",
+                            "entityTypeCode": "1",
+                            "entityTypeDesc": "Individual",
+                            "enumerationDate": "2007-08-31T00:00:00Z",
+                            "firstName": "THOMAS",
+                            "genderCode": "M",
+                            "isNPIFound": true,
+                            "isSoleProprietor": false,
+                            "lastModifiedDate": "2008-08-06T00:00:00Z",
+                            "lastName": "CIBULL",
+                            "middleName": "LEE",
+                            "namePrefix": "DR.",
+                            "npi": "1003000134",
+                            "nppesLicense": [
+                                {
+                                    "licenseNumber": "036120492",
+                                    "licenseStateCode": "IL",
+                                    "primaryTaxonomySwitch": "Y",
+                                    "taxonomyCode": "207ZP0102X"
+                                }
+                            ],
+                            "practiceLocationAddressLine1": "2650 RIDGE AVE",
+                            "practiceLocationAddressLine2": "EVANSTON HOSPITAL",
+                            "practiceLocationCity": "EVANSTON",
+                            "practiceLocationCountryCode": "US",
+                            "practiceLocationPostalCode": "602011718",
+                            "practiceLocationStateCode": "IL"
+                        }
+                    ],
+                    "pecosResult": {
+                        "pecosFeePaymentResult": [
+                            {
+                                "feePaymentStatus": "N",
+                                "feeWaiverStatus": "N",
+                                "npi": "1003000134",
+                                "stateCd": "IL"
+                            }
+                        ],
+                        "pecosScreeningResult": [
+                            {
+                                "enrollmentStatus": "Approved",
+                                "firstName": "Thomas",
+                                "lastName": "Cibull",
+                                "npi": "1003000134",
+                                "screeningLevel": "Limited",
+                                "specialty": "Pathology",
+                                "stateCd": "IL",
+                                "statusEffectiveDate": "2020-05-21Z",
+                                "tin": "6367",
+                                "tinType": "S"
+                            }
+                        ]
+                    },
+                    "taxIdResult": {
+                        "taxId": "222183848",
+                        "taxName": "CIBULL THOMAS",
+                        "matchCode": 0
+                    }
+                }
+            }
+        ]
+    },
+    "disposition": {
+        "effectiveDate": {
+            "requestedDate": "2026-04-29Z"
+        }
+    },
+    "wfProcessId": 151610
+}

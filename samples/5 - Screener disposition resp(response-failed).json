@@ -1,0 +1,12 @@
+{
+  "result": {
+    "code": "3001",
+    "message": "Errors were encountered",
+    "failedItems": [
+      {
+        "code": 3003,
+        "message": "Task not found or is already completed."
+      }
+    ]
+  }
+}

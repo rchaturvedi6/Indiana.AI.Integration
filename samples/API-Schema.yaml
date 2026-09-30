@@ -1,0 +1,1497 @@
+openapi: 3.0.3
+info:
+  title: Provider Enrollment (PE) API
+  description: |
+    API schema for the Provider Enrollment integration between the Provider Portal,
+    the AI Verification Service, the File Management Server (FMS) and the Screener Service.
+
+    | # | API | Endpoint | Source → Target | Auth |
+    |---|-----|----------|-----------------|------|
+    | 1 | Document upload request | `/pe/document_upload` | Provider Portal → AI Verification Service | `X-Source`, `X-API-Key` |
+    | 2 | File Management server request to download uploaded file | `R6.0/FileMgmtQuery/GetEDMSFileQuery` | AI Verification Service → Provider Portal (FMS) | — |
+    | 3 | Document validate request | `/pe/document_validate` | Provider Portal → AI Verification Service | `X-Source`, `X-API-Key` |
+    | 4 | Screener request | `/pe/screener/document_upload` | Screener Service → AI Verification Service | `X-Source`, `X-API-Key` |
+    | 5 | Response posted back to screener | `peApplicationReviewResponse` | AI Verification Service → Screener Service | — |
+  version: "1.5"
+
+servers:
+  - url: https://enso-apis.enso.dev.pgwcloud.net
+    description: AI Verification Service (APIs 1, 3, 4)
+  - url: https://bas-fltest-perf.mapshc.com/HPP.Core.FileMgmtApi
+    description: Provider Portal — File Management API (API 2)
+  - url: https://mapststappian02.test.mapshc.com/suite/webapi
+    description: Screener Service — Appian (API 5)
+
+security:
+  - XSource: []
+    XApiKey: []
+
+tags:
+  - name: Documents
+    description: Document upload and AI validation (AI Verification Service)
+  - name: FileManagement
+    description: File Management Server file retrieval (Provider Portal)
+  - name: Screener
+    description: Provider screening and disposition review
+
+paths:
+
+  # ---------- API 1 ----------
+  /pe/document_upload:
+    post:
+      tags: [Documents]
+      summary: Document upload request (API 1)
+      description: |
+        Provider Portal → AI Verification Service.
+        Uploads the enrollment payload and file attachment metadata for AI processing.
+      operationId: uploadDocuments
+      servers:
+        - url: https://enso-apis.enso.dev.pgwcloud.net
+          description: AI Verification Service
+      security:
+        - XSource: []
+          XApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocUploadRequest'
+      responses:
+        '200':
+          description: Acknowledgement of upload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AckResponse'
+
+  # ---------- API 2 ----------
+  /R6.0/FileMgmtQuery/GetEDMSFileQuery:
+    post:
+      tags: [FileManagement]
+      summary: File Management server request to download uploaded file (API 2)
+      description: |
+        AI Verification Service → Provider Portal (File Management Server).
+        Retrieves the binary content of a previously-uploaded EDMS file so the
+        AI Verification Service can extract and validate its contents.
+        Authentication is not documented for this endpoint.
+      operationId: getEdmsFile
+      servers:
+        - url: https://bas-fltest-perf.mapshc.com/HPP.Core.FileMgmtApi
+          description: Provider Portal — File Management API
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetEdmsFileRequest'
+      responses:
+        '200':
+          description: File retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEdmsFileResponse'
+
+  # ---------- API 3 ----------
+  /pe/document_validate:
+    post:
+      tags: [Documents]
+      summary: Document validate request to retrieve the verification details (API 3)
+      description: |
+        Provider Portal → AI Verification Service.
+        Requests AI validation of the uploaded documents against the entered
+        enrollment data and returns per-document mismatch details.
+      operationId: validateDocuments
+      servers:
+        - url: https://enso-apis.enso.dev.pgwcloud.net
+          description: AI Verification Service
+      security:
+        - XSource: []
+          XApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DocValidateRequest'
+      responses:
+        '200':
+          description: Validation results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocValidateResponse'
+
+  # ---------- API 4 ----------
+  /pe/screener/document_upload:
+    post:
+      tags: [Screener]
+      summary: Screener request (API 4)
+      description: |
+        Screener Service → AI Verification Service.
+        Submits a provider enrollment (with existing screening results) for AI
+        review. The AI Verification Service responds asynchronously via API 5.
+      operationId: submitScreenerRequest
+      servers:
+        - url: https://enso-apis.enso.dev.pgwcloud.net
+          description: AI Verification Service
+      security:
+        - XSource: []
+          XApiKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreenerRequest'
+      responses:
+        '200':
+          description: Acknowledgement of screening request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AckResponse'
+
+  # ---------- API 5 ----------
+  /peApplicationReviewResponse:
+    post:
+      tags: [Screener]
+      summary: Response posted back to screener for the screener request (API 5)
+      description: |
+        AI Verification Service → Screener Service (Appian).
+        Applies AI-generated dispositions (addresses, attachments, screenings)
+        back onto the screening workflow identified by `wfProcessId` / `trackingId`.
+        Authentication is not documented for this endpoint.
+      operationId: applyScreenerDisposition
+      servers:
+        - url: https://mapststappian02.test.mapshc.com/suite/webapi
+          description: Screener Service — Appian
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScreenerDispositionRequest'
+      responses:
+        '200':
+          description: Disposition applied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ScreenerDispositionResponse'
+              examples:
+                success:
+                  $ref: '#/components/examples/DispositionSuccess'
+                failed:
+                  $ref: '#/components/examples/DispositionFailed'
+
+components:
+
+  securitySchemes:
+    XApiKey:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key issued to the calling service
+    XSource:
+      type: apiKey
+      in: header
+      name: X-Source
+      description: Identifier of the calling source system (e.g. provider_portal, screener_service)
+
+  # Operations that hit the AI Verification Service require BOTH headers.
+  # OpenAPI's AND semantics: multiple keys inside one requirement object → all required.
+  #     security:
+  #       - XSource: []
+  #         XApiKey: []
+
+  schemas:
+
+    # ---------- Common ----------
+
+    Route:
+      type: object
+      description: Common envelope identifying the caller and request context
+      required: [domain, tenantID, appClient, requestGUID, requestType]
+      properties:
+        domain:
+          type: string
+          example: prov-enroll
+          description: Logical service domain (prov-enroll or prov-enrollment)
+        apiVer:
+          type: number
+          format: float
+          example: 1.5
+        apiver:
+          type: number
+          format: float
+          description: Alternate lowercase spelling used by the screener endpoint
+          example: 1.0
+        tenantID:
+          type: string
+          format: uuid
+        appClient:
+          type: string
+          example: prov_portal_ftest
+        clientID:
+          type: string
+          nullable: true
+        requestGUID:
+          type: string
+        requestType:
+          type: string
+          description: |
+            Discriminator identifying the request type. Observed values:
+              - `document_upload` — used by API 1 and by the API 4 screener request
+              - `document_validate` — used by API 3
+          enum:
+            - document_upload
+            - document_validate
+        timeStampId:
+          type: string
+          description: Client-generated timestamp identifier
+
+    AckStatus:
+      type: object
+      required: [code, status]
+      properties:
+        code:
+          type: string
+          example: "1002"
+        status:
+          type: string
+          enum: [PASS, FAIL]
+        processingTimeMs:
+          type: number
+          format: float
+        timestamp:
+          type: string
+          format: date-time
+
+    AckResponse:
+      type: object
+      required: [route, ack_status]
+      properties:
+        route:
+          $ref: '#/components/schemas/Route'
+        ack_status:
+          $ref: '#/components/schemas/AckStatus'
+
+    Name:
+      type: object
+      properties:
+        title:
+          type: string
+          nullable: true
+        first:
+          type: string
+        middle:
+          type: string
+          nullable: true
+        last:
+          type: string
+        suffix:
+          type: string
+          nullable: true
+        familyNames:
+          type: array
+          items:
+            type: string
+
+    CodedValue:
+      type: object
+      description: Generic {id, name, description} triple used throughout the screener payloads
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+
+    PhoneNumber:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/CodedValue'
+        number:
+          type: string
+
+    Disposition:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [Pass, Flag, Fail, N/A]
+        reviewer:
+          type: string
+          example: System
+        reviewDate:
+          type: string
+        comment:
+          type: string
+        exceptions:
+          type: array
+          items:
+            type: string
+
+    # ---------- API 1: Doc Upload / API 3: Doc Validate (request) ----------
+
+    BusinessInformation:
+      type: object
+      properties:
+        doingBusinessAsName:
+          type: string
+          nullable: true
+        legalName:
+          type: string
+        taxName:
+          type: string
+          nullable: true
+
+    IndividualInformation:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        gender:
+          type: string
+          enum: [M, F, U]
+        dateOfBirth:
+          type: string
+
+    Specialty:
+      type: object
+      properties:
+        specialtyCode:
+          type: string
+        specialtyName:
+          type: string
+        isPrimary:
+          type: boolean
+        programs:
+          type: array
+          items:
+            type: object
+        taxonomyCode:
+          type: string
+        taxonomyName:
+          type: string
+        waivers:
+          type: array
+          items:
+            type: object
+
+    CliaDetail:
+      type: object
+      properties:
+        cliaNumber:
+          type: string
+        effectiveDate:
+          type: string
+        endDate:
+          type: string
+        cliaTypeName:
+          type: string
+        cliaType:
+          type: string
+
+    LicenseDetail:
+      type: object
+      properties:
+        licenseNumber:
+          type: string
+        stateCode:
+          type: string
+        assigningBoard:
+          type: string
+        assigningBoardName:
+          type: string
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
+
+    DeaDetail:
+      type: object
+      properties:
+        deaNumber:
+          type: string
+        effectiveDate:
+          type: string
+        endDate:
+          type: string
+
+    PeCertification:
+      type: object
+      properties:
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
+        specialtyCode:
+          type: string
+        specialtyName:
+          type: string
+        othersCertificationText:
+          type: string
+        certificationNumber:
+          type: string
+        isExemptfromAccreditation:
+          type: string
+          enum: ["True", "False"]
+
+    MalpracticeInsurance:
+      type: object
+      properties:
+        carrierTypeName:
+          type: string
+        policyNumber:
+          type: string
+        carrierTypeCode:
+          type: string
+        effectiveDate:
+          type: string
+        carrierName:
+          type: string
+        coverageAmountPerOccurrence:
+          type: number
+        coverageAmountAggregate:
+          type: number
+        endDate:
+          type: string
+
+    FlatAddress:
+      type: object
+      description: Flat address used in the Doc Upload / Doc Validate payloads
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+        stateId:
+          type: string
+        stateValue:
+          type: string
+        postalCode:
+          type: string
+        countyId:
+          type: string
+        countyValue:
+          type: string
+        countryId:
+          type: string
+        countryValue:
+          type: string
+        isValid:
+          type: string
+          enum: ["True", "False"]
+        latitude:
+          type: string
+        longitude:
+          type: string
+
+    AddressWrapper:
+      type: object
+      properties:
+        addressType:
+          type: string
+          example: S
+        isPrimaryLocation:
+          type: boolean
+        address:
+          $ref: '#/components/schemas/FlatAddress'
+
+    Attachment:
+      type: object
+      required: [fileId, fileName, attachmentTypeCode]
+      properties:
+        fileId:
+          type: string
+          format: uuid
+        fileName:
+          type: string
+        attachmentTypeCode:
+          type: string
+        attachmentTypeName:
+          type: string
+
+    DmeSuretyBond:
+      type: object
+      properties:
+        bondNumber:
+          type: string
+          nullable: true
+        effectiveDate:
+          type: string
+          nullable: true
+
+    EducationDetail:
+      type: object
+      properties:
+        degreeName:
+          type: string
+        providerDegreeId:
+          type: string
+        isRevalidation:
+          type: boolean
+        yearOfGraduation:
+          type: string
+        school:
+          type: string
+        providerDOB:
+          type: string
+          nullable: true
+
+    PaymentDetail:
+      type: object
+      properties:
+        amount:
+          type: number
+        paymentDate:
+          type: string
+        transactionId:
+          type: string
+          nullable: true
+
+    EftDetail:
+      type: object
+      properties:
+        accountHolderName:
+          type: string
+        routingNumber:
+          type: string
+        accountNumber:
+          type: string
+
+    BackdateRequest:
+      type: object
+      properties:
+        issueDate:
+          type: string
+
+    DocProviderInformation:
+      type: object
+      properties:
+        npi:
+          type: string
+        ssn:
+          type: string
+        providerID:
+          type: string
+          nullable: true
+        businessInformation:
+          $ref: '#/components/schemas/BusinessInformation'
+        individualInformation:
+          $ref: '#/components/schemas/IndividualInformation'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/Specialty'
+        cliaDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/CliaDetail'
+        licenseDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/LicenseDetail'
+        deaDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeaDetail'
+        peCertifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/PeCertification'
+        accreditationInfo:
+          type: array
+          items:
+            type: object
+        malPracticeInsurance:
+          type: array
+          items:
+            $ref: '#/components/schemas/MalpracticeInsurance'
+        medicaidProgramParticipations:
+          type: array
+          items:
+            type: object
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/AddressWrapper'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        dmeSuretyBond:
+          type: array
+          items:
+            $ref: '#/components/schemas/DmeSuretyBond'
+        educationDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EducationDetail'
+        paymentDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentDetail'
+        eftDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/EftDetail'
+        swingBedDetails:
+          type: object
+        backdateRequest:
+          $ref: '#/components/schemas/BackdateRequest'
+
+    DocEnrollment:
+      type: object
+      required: [trackingID, applicationType, enrollmentType, providerType, providerInformation]
+      properties:
+        trackingID:
+          type: string
+        applicationType:
+          type: string
+          example: NewEnrollment
+        enrollmentType:
+          type: string
+          example: Facility
+        enrollmentTypeName:
+          type: string
+        providerType:
+          type: string
+          example: Hospital
+        providerTypeName:
+          type: string
+        providerInformation:
+          $ref: '#/components/schemas/DocProviderInformation'
+        desiredEffectiveDate:
+          type: string
+
+    DocUploadRequest:
+      type: object
+      required: [route, enrollment]
+      properties:
+        route:
+          $ref: '#/components/schemas/Route'
+        enrollment:
+          $ref: '#/components/schemas/DocEnrollment'
+
+    DocValidateRequest:
+      allOf:
+        - $ref: '#/components/schemas/DocUploadRequest'
+      description: Same envelope as DocUploadRequest; requestType must be `document_validate`.
+
+    # ---------- API 2: FMS Get EDMS File ----------
+
+    GetEdmsFileRequest:
+      type: object
+      description: |
+        Request payload for retrieving an uploaded EDMS file. Modeled from the
+        endpoint name (`R6.0/FileMgmtQuery/GetEDMSFileQuery`) — no sample payload
+        was provided; adjust fields when the FMS contract is confirmed.
+      required: [fileId]
+      properties:
+        fileId:
+          type: string
+          format: uuid
+          description: Identifier returned by the Provider Portal at upload time
+        tenantID:
+          type: string
+          format: uuid
+        requestGUID:
+          type: string
+          description: Correlation id issued by the AI Verification Service
+        includeContent:
+          type: boolean
+          default: true
+          description: If true, response includes base64-encoded file bytes
+
+    GetEdmsFileResponse:
+      type: object
+      description: |
+        Response payload returning the EDMS file metadata and (optionally) its
+        base64-encoded content. Placeholder shape — confirm against the FMS API.
+      required: [fileId, fileName]
+      properties:
+        fileId:
+          type: string
+          format: uuid
+        fileName:
+          type: string
+        mimeType:
+          type: string
+          example: application/pdf
+        sizeBytes:
+          type: integer
+        uploadedAt:
+          type: string
+          format: date-time
+        content:
+          type: string
+          format: byte
+          description: Base64-encoded file bytes
+        status:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "1000"
+            message:
+              type: string
+
+    # ---------- API 3: Doc Validate Response ----------
+
+    ValidationError:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          description: |
+            Validation error code. Observed codes include:
+              3001 attachment type mismatch,
+              3101 name mismatch,
+              3109 address mismatch,
+              3116 CLIA number mismatch,
+              3120 tax id mismatch,
+              3123 license number mismatch,
+              3127 effective date mismatch,
+              3129 expiration/end date mismatch,
+              3133 generic field mismatch,
+              3150 issue date mismatch.
+        entered:
+          type: string
+          nullable: true
+          description: Value the applicant entered on the enrollment
+        extracted:
+          type: string
+          nullable: true
+          description: Value the AI extracted from the uploaded document
+
+    FailedDoc:
+      type: object
+      required: [fileId, validation_errors]
+      properties:
+        fileId:
+          type: string
+          format: uuid
+        validation_errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+
+    ResultsSummary:
+      type: object
+      required: [code, status, totalDocs, passedDocs, failedDocs, errorDocs]
+      properties:
+        code:
+          type: string
+          example: "2001"
+        status:
+          type: string
+          enum: [PASS, FAIL]
+        timestamp:
+          type: string
+          format: date-time
+        processingTimeMs:
+          type: number
+          format: float
+        totalDocs:
+          type: integer
+        passedDocs:
+          type: integer
+        failedDocs:
+          type: integer
+        errorDocs:
+          type: integer
+
+    DocValidateResponse:
+      type: object
+      required: [route, failedDocs, resultsSummary]
+      properties:
+        route:
+          $ref: '#/components/schemas/Route'
+        failedDocs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FailedDoc'
+        resultsSummary:
+          $ref: '#/components/schemas/ResultsSummary'
+
+    # ---------- API 4: Screener Request ----------
+
+    ScreenerAddress:
+      type: object
+      description: Rich address used in the screener payloads (nested id/name/description objects)
+      properties:
+        line1:
+          type: string
+        city:
+          type: string
+        county:
+          $ref: '#/components/schemas/CodedValue'
+        state:
+          $ref: '#/components/schemas/CodedValue'
+        country:
+          $ref: '#/components/schemas/CodedValue'
+        postalCode:
+          type: string
+        isValid:
+          type: boolean
+        latitude:
+          type: number
+        longitude:
+          type: number
+
+    Contact:
+      type: object
+      properties:
+        isIndividual:
+          type: boolean
+        personName:
+          $ref: '#/components/schemas/Name'
+
+    ScreenerAddressEntry:
+      type: object
+      required: [index]
+      properties:
+        index:
+          type: integer
+        addressId:
+          type: string
+        addressName:
+          type: string
+        addressSource:
+          type: string
+          enum: [Addresses, General, Self-Disclosure]
+        address:
+          $ref: '#/components/schemas/ScreenerAddress'
+        addressType:
+          $ref: '#/components/schemas/CodedValue'
+        contact:
+          $ref: '#/components/schemas/Contact'
+        copiedFrom:
+          $ref: '#/components/schemas/CodedValue'
+        isPrimaryLocation:
+          type: boolean
+        locationCode:
+          $ref: '#/components/schemas/CodedValue'
+        phoneNumbers:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhoneNumber'
+        isDirty:
+          type: boolean
+        disposition:
+          $ref: '#/components/schemas/Disposition'
+
+    EnrollmentDetail:
+      type: object
+      properties:
+        trackingId:
+          type: string
+        enrollmentApplicationId:
+          type: string
+          format: uuid
+
+    EnrollmentCriteria:
+      type: object
+      properties:
+        applicationType:
+          type: string
+        applicationTypeCode:
+          type: string
+        enrollmentType:
+          type: string
+        enrollmentTypeCode:
+          type: string
+        providerType:
+          type: string
+        providerTypeCode:
+          type: string
+        requestedEffectiveDate:
+          type: string
+        riskLevel:
+          type: string
+          enum: [Limited, Moderate, High]
+        riskLevelCode:
+          type: string
+          enum: [L, M, H]
+
+    EnrollmentFlags:
+      type: object
+      properties:
+        isBackgroundCheckNeeded:
+          type: boolean
+        isCredentialingRequired:
+          type: boolean
+        isFeeRequired:
+          type: boolean
+        isNursingFacility:
+          type: boolean
+        isRateRequired:
+          type: boolean
+        isSiteVisitNeeded:
+          type: boolean
+
+    ScreenerProviderInformation:
+      type: object
+      properties:
+        isIndividual:
+          type: boolean
+        isBusiness:
+          type: boolean
+        isAsBusiness:
+          type: boolean
+        providerIdentifiers:
+          type: object
+          properties:
+            npi:
+              type: string
+            ssn:
+              type: string
+            preferredCommunicationLanguage:
+              type: string
+            preferredCommunicationLanguageLocale:
+              type: string
+        otherIdentifiers:
+          type: object
+          properties:
+            isChowEnrollment:
+              type: boolean
+            isCurrentlyEnrolled:
+              type: boolean
+            isPossibleDuplicate:
+              type: boolean
+            isPreviouslyEnrolled:
+              type: boolean
+            isRegistered:
+              type: boolean
+            telehealthServicesOffered:
+              type: boolean
+        individualInformation:
+          $ref: '#/components/schemas/IndividualInformation'
+
+    ApplicantContact:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/Name'
+        address:
+          type: object
+          properties:
+            line1:
+              type: string
+            city:
+              type: string
+            state:
+              $ref: '#/components/schemas/CodedValue'
+            country:
+              $ref: '#/components/schemas/CodedValue'
+            postalCode:
+              type: string
+            isValid:
+              type: boolean
+            latitude:
+              type: number
+            longitude:
+              type: number
+        contactPreference:
+          type: object
+          properties:
+            phoneNumber:
+              $ref: '#/components/schemas/PhoneNumber'
+            emailAddress:
+              type: string
+              format: email
+            preferredCommunicationMethod:
+              type: string
+              enum: [Email, Phone, Mail]
+
+    ScreenerSpecialty:
+      type: object
+      properties:
+        specialtyCode:
+          type: string
+        description:
+          type: string
+        displayName:
+          type: string
+        isPrimary:
+          type: string
+        hasWaiver:
+          type: string
+        hasProgram:
+          type: string
+        taxonomy:
+          type: object
+          properties:
+            taxonomyCode:
+              type: string
+            description:
+              type: string
+            displayName:
+              type: string
+
+    ScreenerLicenseDetail:
+      type: object
+      properties:
+        licenseNumber:
+          type: string
+        licenseState:
+          $ref: '#/components/schemas/CodedValue'
+        assigningBoard:
+          $ref: '#/components/schemas/CodedValue'
+        effectiveDate:
+          type: string
+        expirationDate:
+          type: string
+
+    ControlledSubstanceDetails:
+      type: object
+      properties:
+        dispenser:
+          type: object
+          properties:
+            isRegistered:
+              type: string
+        prescriber:
+          type: object
+          properties:
+            isRegistered:
+              type: string
+
+    ScreenerAttachment:
+      type: object
+      required: [index, fileId, fileName]
+      properties:
+        index:
+          type: integer
+        fileId:
+          type: string
+          format: uuid
+        fileName:
+          type: string
+        fileType:
+          $ref: '#/components/schemas/CodedValue'
+        postUploaded:
+          type: boolean
+        required:
+          type: boolean
+        transmissionMethod:
+          $ref: '#/components/schemas/CodedValue'
+        disposition:
+          $ref: '#/components/schemas/Disposition'
+
+    Disclosure:
+      type: object
+      properties:
+        index:
+          type: integer
+        disclosureForm:
+          type: string
+        disclosureFormId:
+          type: integer
+        entityInformation:
+          type: object
+          properties:
+            dateOfBirth:
+              type: string
+            isIndividual:
+              type: boolean
+            personName:
+              $ref: '#/components/schemas/Name'
+            ssn:
+              type: string
+        disposition:
+          $ref: '#/components/schemas/Disposition'
+
+    ScreeningCriteria:
+      type: object
+      properties:
+        checkCLIA:
+          type: boolean
+        checkDEA:
+          type: boolean
+        checkLicense:
+          type: boolean
+        checkMCSIS:
+          type: boolean
+        checkNPPES:
+          type: boolean
+        checkPECOS:
+          type: boolean
+        checkSAM:
+          type: boolean
+        checkSSNDM:
+          type: boolean
+        checkStateScreening:
+          type: boolean
+        checkTaxId:
+          type: boolean
+        dateOfBirth:
+          type: string
+        entityDescription:
+          type: string
+        entityType:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        licenseNumber:
+          type: string
+        licenseState:
+          type: string
+        npi:
+          type: string
+        performTransactionAudit:
+          type: boolean
+        requestType:
+          type: string
+        ssn:
+          type: string
+
+    ScreeningCheckResult:
+      type: object
+      required: [action, screeningCheck]
+      properties:
+        action:
+          type: string
+          enum: [Pass, Flag, Fail]
+        comment:
+          type: string
+        exceptions:
+          type: array
+          items:
+            type: string
+        passed:
+          type: boolean
+        reviewer:
+          type: string
+        reviewDate:
+          type: string
+        screeningCheck:
+          type: string
+          example: NPPES
+          description: SSA DM, OIG/LEIE, SAM, MCSIS, License, NPPES, PECOS, Tax ID, CLIA, DEA, etc.
+
+    ScreeningDisposition:
+      type: object
+      properties:
+        screeningReviewRequired:
+          type: boolean
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScreeningCheckResult'
+
+    NppesResult:
+      type: object
+      properties:
+        credential:
+          type: string
+        entityTypeCode:
+          type: string
+        entityTypeDesc:
+          type: string
+        enumerationDate:
+          type: string
+        firstName:
+          type: string
+        genderCode:
+          type: string
+        isNPIFound:
+          type: boolean
+        isSoleProprietor:
+          type: boolean
+        lastModifiedDate:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        namePrefix:
+          type: string
+        npi:
+          type: string
+        nppesLicense:
+          type: array
+          items:
+            type: object
+            properties:
+              licenseNumber:
+                type: string
+              licenseStateCode:
+                type: string
+              primaryTaxonomySwitch:
+                type: string
+              taxonomyCode:
+                type: string
+        practiceLocationAddressLine1:
+          type: string
+        practiceLocationAddressLine2:
+          type: string
+        practiceLocationCity:
+          type: string
+        practiceLocationCountryCode:
+          type: string
+        practiceLocationPostalCode:
+          type: string
+        practiceLocationStateCode:
+          type: string
+
+    PecosResult:
+      type: object
+      properties:
+        pecosFeePaymentResult:
+          type: array
+          items:
+            type: object
+            properties:
+              feePaymentStatus:
+                type: string
+              feeWaiverStatus:
+                type: string
+              npi:
+                type: string
+              stateCd:
+                type: string
+        pecosScreeningResult:
+          type: array
+          items:
+            type: object
+            properties:
+              enrollmentStatus:
+                type: string
+              firstName:
+                type: string
+              lastName:
+                type: string
+              npi:
+                type: string
+              screeningLevel:
+                type: string
+              specialty:
+                type: string
+              stateCd:
+                type: string
+              statusEffectiveDate:
+                type: string
+              tin:
+                type: string
+              tinType:
+                type: string
+
+    TaxIdResult:
+      type: object
+      properties:
+        taxId:
+          type: string
+        taxName:
+          type: string
+        matchCode:
+          type: integer
+
+    ScreeningResult:
+      type: object
+      properties:
+        nppesResult:
+          type: array
+          items:
+            $ref: '#/components/schemas/NppesResult'
+        pecosResult:
+          $ref: '#/components/schemas/PecosResult'
+        taxIdResult:
+          $ref: '#/components/schemas/TaxIdResult'
+
+    Screening:
+      type: object
+      required: [index]
+      properties:
+        index:
+          type: integer
+        criteria:
+          $ref: '#/components/schemas/ScreeningCriteria'
+        screeningReviewRequired:
+          type: boolean
+        disposition:
+          $ref: '#/components/schemas/ScreeningDisposition'
+        result:
+          $ref: '#/components/schemas/ScreeningResult'
+
+    ScreeningResults:
+      type: object
+      properties:
+        screeningReviewRequired:
+          type: boolean
+        screenings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Screening'
+
+    ScreenerEnrollment:
+      type: object
+      properties:
+        enrollmentDetail:
+          $ref: '#/components/schemas/EnrollmentDetail'
+        enrollmentCriteria:
+          $ref: '#/components/schemas/EnrollmentCriteria'
+        enrollmentFlags:
+          $ref: '#/components/schemas/EnrollmentFlags'
+        providerInformation:
+          $ref: '#/components/schemas/ScreenerProviderInformation'
+        applicantContact:
+          $ref: '#/components/schemas/ApplicantContact'
+        specialties:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScreenerSpecialty'
+        licenseDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScreenerLicenseDetail'
+        controlledSubstanceDetails:
+          $ref: '#/components/schemas/ControlledSubstanceDetails'
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScreenerAddressEntry'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScreenerAttachment'
+        fundingSource:
+          $ref: '#/components/schemas/CodedValue'
+        disclosures:
+          type: array
+          items:
+            $ref: '#/components/schemas/Disclosure'
+
+    ScreenerRequest:
+      type: object
+      required: [route, enrollment]
+      properties:
+        route:
+          $ref: '#/components/schemas/Route'
+        enrollment:
+          $ref: '#/components/schemas/ScreenerEnrollment'
+        screeningResults:
+          $ref: '#/components/schemas/ScreeningResults'
+        disposition:
+          type: object
+          properties:
+            effectiveDate:
+              type: object
+              properties:
+                requestedDate:
+                  type: string
+        wfProcessId:
+          type: integer
+
+    # ---------- API 5: Screener Disposition ----------
+
+    DispositionAttachmentUpdate:
+      type: object
+      required: [index, disposition]
+      properties:
+        index:
+          type: integer
+        disposition:
+          $ref: '#/components/schemas/Disposition'
+
+    DispositionScreeningUpdate:
+      type: object
+      required: [index, disposition]
+      properties:
+        index:
+          type: integer
+        disposition:
+          type: object
+          properties:
+            results:
+              type: array
+              items:
+                $ref: '#/components/schemas/ScreeningCheckResult'
+
+    DispositionAddressUpdate:
+      type: object
+      properties:
+        index:
+          type: integer
+        disposition:
+          $ref: '#/components/schemas/Disposition'
+
+    ScreenerDispositionRequest:
+      type: object
+      required: [wfProcessId, trackingId]
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: '#/components/schemas/DispositionAddressUpdate'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/DispositionAttachmentUpdate'
+        screenings:
+          type: array
+          items:
+            $ref: '#/components/schemas/DispositionScreeningUpdate'
+        wfProcessId:
+          type: integer
+        trackingId:
+          type: string
+
+    FailedItem:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
+    ScreenerDispositionResponse:
+      type: object
+      required: [result]
+      properties:
+        result:
+          type: object
+          required: [code, message, failedItems]
+          properties:
+            code:
+              type: string
+              example: "1000"
+              description: "1000 = success; 3xxx = errors (e.g. 3001 = errors encountered)"
+            message:
+              type: string
+            failedItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/FailedItem'
+
+  examples:
+    DispositionSuccess:
+      summary: All disposition updates applied
+      value:
+        result:
+          code: "1000"
+          message: AI review results applied successfully
+          failedItems: []
+    DispositionFailed:
+      summary: One or more items failed to apply
+      value:
+        result:
+          code: "3001"
+          message: Errors were encountered
+          failedItems:
+            - code: 3003
+              message: Task not found or is already completed.

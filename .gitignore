@@ -1,0 +1,15 @@
+## .NET build artifacts
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+## Rider / VS
+.vs/
+.idea/
+*.user
+
+## Test results
+[Tt]est[Rr]esults/
+*.trx
+coverage*.json

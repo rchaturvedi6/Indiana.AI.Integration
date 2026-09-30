@@ -1,0 +1,47 @@
+{
+  "where": {
+    "edmsFileId": "ea138d65-40b7-43a7-8b4c-c872a2089b9f",
+    "tenantId": "77b50320-5f06-5740-84f4-18d4a8cda51d",
+    "moduleName": "Provider Enrollment",
+    "fileDetails": null
+  },
+  "queryResult": {
+    "edmsFileId": "ea138d65-40b7-43a7-8b4c-c872a2089b9f",
+    "fileName": "PE_20260923061216_8033190193_12_EFT_Paperwork_New",
+    "fileExtension": "pdf",
+    "fileData": "JVBERi0xLjMKJZOMi54gUmVwb3J0TGFiIEdlbmVyYXRlZCBQREYgZG9jdW1lbnQgKG9wZW5zb3VyY2Up...(truncated)...",
+    "keyIdentifiers": {
+      "Document Type": "Attachment",
+      "Document Name": "Provider Enrollment Attachments",
+      "Date": "9/23/2026 6:12:16 AM",
+      "ATN": "8033190193",
+      "Attachment Type": "ClaimEDIWaiver",
+      "NPI": "1539652374",
+      "Attachment Type Description": "Claims Waiver for EDI/DDE"
+    },
+    "moduleName": "Provider Enrollment",
+    "userId": "PCDefaultUser",
+    "lastModifiedDate": "2026-09-23T11:12:16.857448",
+    "isActive": true
+  },
+  "pageSize": 0,
+  "currentPage": 0,
+  "rowCount": 0,
+  "byPassCountQuery": false,
+  "viewTimeStamp": "0001-01-01T00:00:00",
+  "cycleDate": null,
+  "requestor": {
+    "correlationId": null,
+    "requestDate": "0001-01-01T00:00:00",
+    "tenantId": "77b50320-5f06-5740-84f4-18d4a8cda51d",
+    "identifierIdType": 0,
+    "identifierId": null,
+    "browserInfo": null,
+    "ipAddress": null,
+    "localeCode": null,
+    "applicationName": null
+  },
+  "getMinRow": 1,
+  "getMaxRow": 25,
+  "dataListCache": null
+}

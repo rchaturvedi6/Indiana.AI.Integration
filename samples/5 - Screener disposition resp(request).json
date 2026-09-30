@@ -1,0 +1,35 @@
+{
+    "addresses": [],
+    "attachments": [
+        {
+            "index": 1,
+            "disposition": {
+                "action": "Flag",
+                "reviewer": "AISystem",
+                "reviewDate": "2026-09-23",
+                "comment": "Name mismatch: 'Lab Facility'(A) vs'Inuvik Regional Hospital Research'(E); Address mismatch: '6211 Centreville Road, Centreville, VA 20121-2641'(A) vs'4548 GOOD ADAMS LN, VIRGINIA BEACH, VA, 23455'(E); License Number mismatch: '8327572031'(A) vs'23D6533475'(E); Expiration Date unverified; Effective Date mismatch: '2025-12-12'(A) vs'2023-01-01'(E)."
+            }
+        }
+    ],
+    "screenings": [
+        {
+            "index": 1,
+            "disposition": {
+                "results": [
+                    {
+                        "action": "Pass",
+                        "reviewer": "AISystem",
+                        "reviewDate": "2026-09-23T10:19:49Z",
+                        "screeningCheck": "NPPES",
+                        "comment": "Resolved; confidence high; Taxonomy: (Anatomic Pathology Physician vs Anatomic Pathology & Clinical Pathology Physician); NPI match: 1003000134; Last name match: CIBULL vs CIBULL; First name match: T…",
+                        "exceptions": [
+                            "NPI taxonomy type mismatch -> Resolved"
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
+    "wfProcessId": 151610,
+    "trackingId": "6491800856"
+}

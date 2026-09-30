@@ -1,0 +1,198 @@
+{
+    "route": {
+        "domain": "prov-enroll",
+        "apiVer": 1.5,
+        "tenantID": "b37b1cec-6603-2d4f-ac37-74e0724774a1",
+        "appClient": "prov_portal_ftest",
+        "clientID": "",
+        "requestGUID": "2965796994",
+        "requestType": "document_validate",
+        "timeStampId": "260909082144923"
+    },
+    "enrollment": {
+        "trackingID": "7807176902",
+        "applicationType": "NewEnrollment",
+        "enrollmentType": "Facility",
+        "enrollmentTypeName": "Facility",
+        "providerType": "Hospital",
+        "providerTypeName": "Hospital",
+        "providerInformation": {
+            "npi": "1269201798",
+            "ssn": "",
+            "providerID": null,
+            "businessInformation": {
+                "doingBusinessAsName": null,
+                "legalName": "Inuvik Regional Hospital Research",
+                "taxName": null
+            },
+            "individualInformation": {
+                "name": {
+                    "title": "PITitle",
+                    "first": "PI  aman",
+                    "middle": "PI MiddleN",
+                    "last": "PI LNauto",
+                    "suffix": null,
+                    "familyNames": []
+                },
+                "gender": "F",
+                "dateOfBirth": "1993-11-11T00:00:00.0000000"
+            },
+            "specialties": [
+                {
+                    "specialtyCode": "010",
+                    "specialtyName": "Acute Care Test",
+                    "isPrimary": true,
+                    "programs": [],
+                    "taxonomyCode": "273100000X",
+                    "taxonomyName": "Epilepsy Hospital Unit",
+                    "waivers": []
+                }
+            ],
+            "cliaDetails": [
+                {
+                    "cliaNumber": "15B3453646",
+                    "effectiveDate": "2026-07-17T00:00:00.0000000",
+                    "endDate": "9999-12-31T00:00:00.0000000",
+                    "cliaTypeName": "1 - Regular",
+                    "cliaType": "1"
+                }
+            ],
+            "licenseDetails": [
+                {
+                    "licenseNumber": "23D6533475",
+                    "stateCode": "VA",
+                    "assigningBoard": "DHP",
+                    "assigningBoardName": "Virginia Department of Health Professionals",
+                    "effectiveDate": "2023-01-01T00:00:00.0000000",
+                    "expirationDate": "2029-12-31T00:00:00.0000000"
+                }
+            ],
+            "deaDetails": [
+                {
+                    "deaNumber": "BW3394356",
+                    "effectiveDate": "2026-07-18T00:00:00.0000000",
+                    "endDate": "2041-11-18T00:00:00.0000000"
+                }
+            ],
+            "peCertifications": [
+                {
+                    "effectiveDate": "2024-01-01T00:00:00.0000000",
+                    "expirationDate": "2029-12-31T00:00:00.0000000",
+                    "specialtyCode": "010",
+                    "specialtyName": "Acute Care Test",
+                    "othersCertificationText": "",
+                    "certificationNumber": "748357345643875",
+                    "isExemptfromAccreditation": "False"
+                }
+            ],
+            "accreditationInfo": [],
+            "malPracticeInsurance": [
+                {
+                    "carrierTypeName": "Professional Liability",
+                    "policyNumber": "3756438543755476437543",
+                    "carrierTypeCode": "PL",
+                    "effectiveDate": "2023-01-01T00:00:00.0000000",
+                    "carrierName": "Gyan",
+                    "coverageAmountPerOccurrence": 45.0,
+                    "coverageAmountAggregate": 56.0,
+                    "endDate": "2029-12-31T00:00:00.0000000"
+                }
+            ],
+            "medicaidProgramParticipations": [],
+            "addresses": [
+                {
+                    "addressType": "S",
+                    "isPrimaryLocation": true,
+                    "address": {
+                        "line1": "4548 GOOD ADAMS LN",
+                        "line2": null,
+                        "city": "VIRGINIA BEACH",
+                        "stateId": "VA",
+                        "stateValue": "Virginia",
+                        "postalCode": "234554940",
+                        "countyId": "USVA810",
+                        "countyValue": "VIRGINIA BEACH CITY",
+                        "countryId": "US",
+                        "countryValue": "UNITED STATES",
+                        "isValid": "True",
+                        "latitude": "36.882103",
+                        "longitude": "-76.132443"
+                    }
+                }
+            ],
+            "attachments": [
+                {
+                    "fileId": "9eb84ea3-37c0-46a1-a75b-b8935c0c63bc",
+                    "fileName": "2.Federal_W9_Tax_Form.pdf",
+                    "attachmentTypeCode": "Federal",
+                    "attachmentTypeName": "Federal W-9 Form"
+                },
+                {
+                    "fileId": "8e96271d-fa17-4c57-896b-4193101aa2ca",
+                    "fileName": "13_Facility License.pdf",
+                    "attachmentTypeCode": "Malprac",
+                    "attachmentTypeName": "License"
+                },
+                {
+                    "fileId": "4d99d591-aff0-4c55-b05e-24a0df855628",
+                    "fileName": "3_CLIA_Certificate_Dev.pdf",
+                    "attachmentTypeCode": "Accred",
+                    "attachmentTypeName": "Accreditation Attachment ( AASM,  AAAHC, AAAASF, ABC, ACHC, ACR, AOA, ASDA, BOC Int’l. CABC, CACH, CAP, CARF, CCAC, CHAP, COA, COLA, CORF, ABPCO, DNV, HCU, HFAP, HQAA, IAC, NABP, NBAOS, TJC, NCQA, URAC JCAHO/ TJC, AOA, AAAHC, HFAP, ACHC, CHAP, DNV, C"
+                },
+                {
+                    "fileId": "4d99d591-aff0-4c55-b05e-24a0df855628",
+                    "fileName": "3_CLIA_Certificate_Dev.pdf",
+                    "attachmentTypeCode": "CLIA",
+                    "attachmentTypeName": "CLIA certificate required"
+                },
+                {
+                    "fileId": "5fe4dcb2-0553-4f8b-b5bb-6fe5683fdf4e",
+                    "fileName": "9_DEA_Certificate.pdf",
+                    "attachmentTypeCode": "HospLic",
+                    "attachmentTypeName": "Hospital License"
+                },
+                {
+                    "fileId": "9e4248aa-d4f6-4e04-b7ba-ad2547700538",
+                    "fileName": "4_Pharmacy_Certificate.pdf",
+                    "attachmentTypeCode": "CMSCertLtr",
+                    "attachmentTypeName": "Certification Letter from CMS"
+                }
+            ],
+            "dmeSuretyBond": [
+                {
+                    "bondNumber": null,
+                    "effectiveDate": null
+                }
+            ],
+            "educationDetails": [
+                {
+                    "degreeName": "Bach eng.",
+                    "providerDegreeId": "1",
+                    "isRevalidation": false,
+                    "yearOfGraduation": "2016",
+                    "school": "DAV101",
+                    "providerDOB": null
+                }
+            ],
+            "paymentDetails": [
+                {
+                    "amount": 0.0,
+                    "paymentDate": "0001-01-01T00:00:00.0000000",
+                    "transactionId": null
+                }
+            ],
+            "eftDetails": [
+                {
+                    "accountHolderName": "PI aman",
+                    "routingNumber": "253453454",
+                    "accountNumber": "77562234612345123"
+                }
+            ],
+            "swingBedDetails": {},
+            "backdateRequest": {
+                "issueDate": "2026-09-18T00:00:00"
+            }
+        },
+        "desiredEffectiveDate": "2026-09-18T00:00:00"
+    }
+}

@@ -1,0 +1,124 @@
+{
+    "route": {
+        "domain": "prov-enroll",
+        "apiVer": 1.5,
+        "tenantID": "b37b1cec-6603-2d4f-ac37-74e0724774a1",
+        "appClient": "prov_portal_ftest",
+        "clientID": "",
+        "requestGUID": "2965796994",
+        "requestType": "document_validate",
+        "timeStampId": "260909082144923"
+    },
+    "failedDocs": [
+        {
+            "fileId": "4d99d591-aff0-4c55-b05e-24a0df855628",
+            "validation_errors": [
+                {
+                    "code": "3116",
+                    "entered": "15B3453646",
+                    "extracted": "19D1234567"
+                },
+                {
+                    "code": "3109",
+                    "entered": "4548 GOOD ADAMS LN, VIRGINIA BEACH, VA, 23455",
+                    "extracted": "6211 Centreville Road, Centreville, Virginia 20121-2641, Fairfax County"
+                },
+                {
+                    "code": "3127",
+                    "entered": "2026-07-17",
+                    "extracted": "2025-12-01"
+                },
+                {
+                    "code": "3129",
+                    "entered": "9999-12-31",
+                    "extracted": "2026-12-31"
+                }
+            ]
+        },
+        {
+            "fileId": "9e4248aa-d4f6-4e04-b7ba-ad2547700538",
+            "validation_errors": [
+                {
+                    "code": "3001",
+                    "entered": "CMSCertLtr",
+                    "extracted": "Pharmacy Certificate"
+                }
+            ]
+        },
+        {
+            "fileId": "5fe4dcb2-0553-4f8b-b5bb-6fe5683fdf4e",
+            "validation_errors": [
+                {
+                    "code": "3001",
+                    "entered": "HospLic",
+                    "extracted": "DEA Certificate"
+                }
+            ]
+        },
+        {
+            "fileId": "8e96271d-fa17-4c57-896b-4193101aa2ca",
+            "validation_errors": [
+                {
+                    "code": "3101",
+                    "entered": "Inuvik Regional Hospital Research",
+                    "extracted": "Lab Facility"
+                },
+                {
+                    "code": "3109",
+                    "entered": "4548 GOOD ADAMS LN, VIRGINIA BEACH, VA, 23455",
+                    "extracted": "6211 Centreville Road, Centreville, VA 20121-2641"
+                },
+                {
+                    "code": "3123",
+                    "entered": "23D6533475",
+                    "extracted": "8327572031"
+                },
+                {
+                    "code": "3129",
+                    "entered": "2029-12-31",
+                    "extracted": null
+                },
+                {
+                    "code": "3127",
+                    "entered": "2023-01-01",
+                    "extracted": "2025-12-12"
+                }
+            ]
+        },
+        {
+            "fileId": "9eb84ea3-37c0-46a1-a75b-b8935c0c63bc",
+            "validation_errors": [
+                {
+                    "code": "3101",
+                    "entered": "Inuvik Regional Hospital Research",
+                    "extracted": "Lab Facility"
+                },
+                {
+                    "code": "3120",
+                    "entered": "733172867",
+                    "extracted": "45-2847391"
+                },
+                {
+                    "code": "3133",
+                    "entered": "",
+                    "extracted": ""
+                },
+                {
+                    "code": "3150",
+                    "entered": "2026-09-18",
+                    "extracted": "2025-12-12"
+                }
+            ]
+        }
+    ],
+    "resultsSummary": {
+        "code": "2001",
+        "status": "FAIL",
+        "timestamp": "2026-09-23T10:29:46",
+        "processingTimeMs": 119.131,
+        "totalDocs": 6,
+        "passedDocs": 0,
+        "failedDocs": 5,
+        "errorDocs": 0
+    }
+}
